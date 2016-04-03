@@ -29,6 +29,4 @@ function* fetchTopStories(limit) {
 export default function* root() {
   yield take('APP_INIT');
   yield fork(fetchTopStories, 500);
-  // yield fork(nextRedditChange)
-  // yield fork(invalidateReddit)
 }

@@ -1,6 +1,7 @@
 var webpack = require('webpack');
+var webpackTargetElectronRenderer = require('webpack-target-electron-renderer');
 
-module.exports = {
+var config = {
   entry: [
     'webpack-hot-middleware/client?reload=true&path=http://localhost:9000/__webpack_hmr',
     './src/index',
@@ -10,6 +11,9 @@ module.exports = {
       test: /\.jsx?$/,
       loaders: ['babel-loader'],
       exclude: /node_modules/
+    }, {
+      test: /\.css$/,
+      loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
     }]
   },
   output: {
@@ -25,3 +29,7 @@ module.exports = {
     // new webpack.NoErrorsPlugin()
   ]
 };
+
+config.target = webpackTargetElectronRenderer(config);
+
+module.exports = config;

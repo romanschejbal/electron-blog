@@ -1,0 +1,93 @@
+body {
+  font-family: monospace;
+  padding: 0px;
+  margin: 0;
+  background: #eee;
+}
+
+h1, h2, h3, h4, ul, ol, li {
+  padding: 0;
+  margin: 0;
+}
+h4 {
+  padding: 10px 0;
+  text-align: center;
+}
+
+.header {
+  background: rgb(255, 102, 0);
+  margin: 0;
+  padding: 10px;
+  text-transform: uppercase;
+  display: flex;
+}
+.header h1 {
+  flex: 1;
+}
+.header input[type=range] {
+  -webkit-appearance: none;
+  background: transparent;
+  outline: 0;
+}
+.header input[type=range]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  width: 300px;
+  height: 3px;
+  background: rgba(0, 0, 0, .2);
+  border: none;
+}
+.header input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: rgb(255, 102, 0);
+  border: 3px solid rgba(0, 0, 0, .5);;
+  margin-top: -6px;
+}
+
+.storyList {
+  padding: 0px;
+  margin: 0px;
+  list-style-position: inside;
+}
+
+.story {
+  margin: 0px;
+  padding: 10px;
+  position: relative;
+  height: 30px;
+  cursor: pointer;
+}
+
+.story:hover {
+  background: #fff;
+}
+
+.storyTitle {
+  font-size: 14px;
+  display: block;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: absolute;
+  top: 9px;
+  left: 40px;
+  right: 10px;
+}
+
+.storyScore {
+  font-size: 12px;
+  margin-right: 10px;
+  position: absolute;
+  top: 25px;
+  left: 40px;
+}
+
+.storyTime {
+  font-size: 12px;
+  position: absolute;
+  top: 25px;
+  right: 10px;
+}

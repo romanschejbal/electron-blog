@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import electron from 'electron';
+import moment from 'moment';
+
+import styles from './styles.css';
 
 export default class App extends Component {
 
@@ -7,20 +11,16 @@ export default class App extends Component {
   };
 
   componentDidMount() {
+    // new Notification(item.score + ' 💥 VOTES 💥', {
+    //   body: item.title,
+    //   silent: true
+    // });
   }
 
   handleClick(story) {
     return (e) => {
       e.preventDefault();
-      // new Notification(item.score + ' 💥 VOTES 💥', {
-      //   body: item.title,
-      //   silent: true
-      // });
-      // console.log(this.props);
-      // this.props.dispatch({
-      //   type: 'DELETE',
-      //   item
-      // });
+      electron.shell.openExternal(story.url);
     };
   }
 
@@ -29,12 +29,14 @@ export default class App extends Component {
       return <div key={story.id}>loading</div>;
     }
 
+    const time = moment.unix(story.time).fromNow();
+
     return (
-      <div onClick={this.handleClick(story)} key={story.id}>
-        <button>{story.score}</button>
-        {' '}
-        <span>{story.title}</span>
-      </div>
+      <li className={styles.story} onClick={this.handleClick(story)} key={story.id}>
+        <span className={styles.storyTitle}>{story.title}</span>
+        <span className={styles.storyScore}>{story.score} points by {story.by}</span>
+        <span className={styles.storyTime}>{time}</span>
+      </li>
     );
   }
 
@@ -44,15 +46,18 @@ export default class App extends Component {
 
     return (
       <div>
-        <h3>Hacker News</h3>
-        <input type="range" min="0" max="1000" value={this.state.scoreLimit} onChange={(e) => this.setState({ scoreLimit: e.target.value })} />
-        {this.state.scoreLimit}
+        <div className={styles.header}>
+          <h1>Hacker News</h1>
+          <input type="range" min="0" max="1000" value={this.state.scoreLimit} onChange={(e) => this.setState({ scoreLimit: e.target.value })} />
+        </div>
 
         {storiesBeingLoaded > 0 && <h4>loading {storiesBeingLoaded} more stories</h4>}
-        {stories
-          .filter(s => s.loaded && s.score >= this.state.scoreLimit)
-          .sort((a, b) => b.score - a.score)
-          .map(::this.renderStory)}
+        <ol className={styles.storyList}>
+          {stories
+            .filter(s => s.loaded && s.score >= this.state.scoreLimit)
+            //.sort((a, b) => b.score - a.score)
+            .map(::this.renderStory)}
+        </ol>
       </div>
     );
   }

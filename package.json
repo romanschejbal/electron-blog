@@ -39,15 +39,20 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "concurrently": "^2.0.0",
+    "css-loader": "^0.23.1",
     "electron-prebuilt": "^0.36.0",
     "express": "^4.13.4",
     "menubar": "^4.1.0",
+    "moment": "^2.12.0",
+    "postcss-loader": "^0.8.2",
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
     "redux": "^3.3.1",
     "redux-saga": "^0.9.5",
+    "style-loader": "^0.13.1",
     "webpack": "^1.12.14",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.10.0"
+    "webpack-hot-middleware": "^2.10.0",
+    "webpack-target-electron-renderer": "^0.4.0"
   }
 }
