@@ -1,11 +1,13 @@
+import 'babel-polyfill'; // generators
 import React from 'react';
 import { render as renderReact } from 'react-dom';
+import configureStore from './store/configureStore';
+
+const store = configureStore();
 
 let App = require('./components/app').default;
-
-const rootElement = document.getElementById('root');
 const render = (Component) => {
-  renderReact(<Component />, rootElement);
+  renderReact(<Component {...store} />, document.getElementById('root'));
 }
 
 if (module.hot) {
@@ -15,4 +17,5 @@ if (module.hot) {
   });
 }
 
-render(App);
+store.subscribe(() => render(App));
+store.dispatch({ type: 'APP_INIT' });

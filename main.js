@@ -1,6 +1,6 @@
-'use strict';
+import menubar from 'menubar';
+import electron from 'electron';
 
-const electron = require('electron');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -48,4 +48,11 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+// menubar
+const mb = menubar();
+mb.on('ready', function ready () {
+  console.log('app is ready')
+  // your app code here
 });
