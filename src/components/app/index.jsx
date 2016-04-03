@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import electron from 'electron';
 import moment from 'moment';
 
+import * as actions from '../../actions';
 import styles from './styles.css';
 
 export default class App extends Component {
-
-  state = {
-    scoreLimit: 0
-  };
 
   componentDidMount() {
     // new Notification(item.score + ' 💥 VOTES 💥', {
@@ -20,15 +17,12 @@ export default class App extends Component {
   handleClick(story) {
     return (e) => {
       e.preventDefault();
-      electron.shell.openExternal(story.url);
+      //electron.shell.openExternal(story.url);
+      this.props.dispatch({type: 'DELETE', story});
     };
   }
 
   renderStory(story) {
-    if (!story.loaded) {
-      return <div key={story.id}>loading</div>;
-    }
-
     const time = moment.unix(story.time).fromNow();
 
     return (
@@ -41,20 +35,21 @@ export default class App extends Component {
   }
 
   render() {
-    const { stories } = this.props.getState();
-    const storiesBeingLoaded = stories.filter(s => !s.loaded).length;
+    const { stories, filter } = this.props.getState();
+    const storiesBeingLoaded = stories.filter(s => s.loading).length;
 
     return (
       <div>
         <div className={styles.header}>
-          <h1>Hacker News</h1>
-          <input type="range" min="0" max="1000" value={this.state.scoreLimit} onChange={(e) => this.setState({ scoreLimit: e.target.value })} />
+          <h1 onClick={() => this.props.dispatch(actions.requestStories())}>
+            Hacker News
+          </h1>
+          {storiesBeingLoaded > 0 && <small>updating {storiesBeingLoaded} more stories</small>}
+          <input type="range" min="0" max="1000" value={filter.scoreLimit} onChange={(e) => this.props.dispatch(actions.updateScoreLimit(e.target.value))} />
         </div>
-
-        {storiesBeingLoaded > 0 && <h4>loading {storiesBeingLoaded} more stories</h4>}
         <ol className={styles.storyList}>
           {stories
-            .filter(s => s.loaded && s.score >= this.state.scoreLimit)
+            .filter(s => s.loaded && s.score >= filter.scoreLimit)
             //.sort((a, b) => b.score - a.score)
             .map(::this.renderStory)}
         </ol>

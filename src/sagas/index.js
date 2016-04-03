@@ -9,24 +9,50 @@ function fetchStory(storyId) {
 function fetchTopStoriesApi() {
   return fetch(`https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty`)
           .then(response => response.json())
-          .then(stories => stories.map(storyId => ({ id: storyId, loaded: false })));
+          .then(stories => stories.map(storyId => ({ id: storyId, loaded: false, loading: false })));
 }
 
-function* fetchTopStories(limit) {
-  const stories = yield call(fetchTopStoriesApi);
-  yield put(actions.fetchedStories(stories.slice(0, limit)));
+function* fetchTopStories(getState) {
+  while (true) {
+    const { limit } = yield take(actions.REQUEST_STORIES);
+    const allStories = yield call(fetchTopStoriesApi);
+    yield put(actions.fetchedStories(allStories));
 
-  yield stories.slice(0, limit).map(function* (story) {
-    yield put(actions.fetchingStory(story));
-    const data = yield call(fetchStory, story.id);
-    yield put(actions.fetchedStory({
-      ...data,
-      loaded: true
-    }));
-  });
+    const stories = allStories.filter(story => {
+      const storyFromState = getState().stories.find(s => s.id === story.id);
+      if (!storyFromState) {
+        return true;
+      }
+      if (!storyFromState.loaded) {
+        return true;
+      }
+      // if (storyFromState.updated)
+      return false;
+    }).slice(0, limit);
+
+    yield stories.map(function* (story) {
+
+      yield put(actions.fetchingStory(story));
+      const data = yield call(fetchStory, story.id);
+      yield put(actions.fetchedStory(data));
+    });
+  }
+}
+
+function* autoRequestStories() {
+  const delay = () => {
+    return new Promise((resolve) => setTimeout(() => resolve(), 3600 * 1000));
+  }
+
+  while(true) {
+    yield call(delay);
+    yield put(actions.requestStories());
+  }
 }
 
 export default function* root() {
-  yield take('APP_INIT');
-  yield fork(fetchTopStories, 500);
+  const { store } = yield take('APP_INIT');
+  yield fork(fetchTopStories, () => store.getState());
+  yield put(actions.requestStories());
+  yield fork(autoRequestStories);
 }

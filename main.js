@@ -51,7 +51,9 @@ app.on('activate', function () {
 });
 
 // menubar
-const mb = menubar();
+const mb = menubar({
+  'show-dock-icon': true
+});
 mb.on('ready', function ready () {
   console.log('app is ready')
   // your app code here

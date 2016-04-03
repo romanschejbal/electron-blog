@@ -4,9 +4,12 @@ export const FETCHED_STORIES = 'FETCHED_STORIES';
 export const FETCHING_STORY = 'FETCHING_STORY';
 export const FETCHED_STORY = 'FETCHED_STORY';
 
-export function requestStories() {
+export const UPDATE_SCORE_LIMIT = 'UPDATE_SCORE_LIMIT';
+
+export function requestStories(limit = 10) {
   return {
-    type: REQUEST_STORIES
+    type: REQUEST_STORIES,
+    limit
   };
 }
 
@@ -29,4 +32,11 @@ export function fetchedStory(story) {
     type: FETCHED_STORY,
     story
   };
+}
+
+export function updateScoreLimit(newScoreLimit) {
+  return {
+    type: UPDATE_SCORE_LIMIT,
+    newScoreLimit
+  }
 }

@@ -18,4 +18,4 @@ if (module.hot) {
 }
 
 store.subscribe(() => render(App));
-store.dispatch({ type: 'APP_INIT' });
+store.dispatch({ type: 'APP_INIT', store });
