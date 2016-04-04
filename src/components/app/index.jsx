@@ -8,10 +8,12 @@ import styles from './styles.css';
 export default class App extends Component {
 
   componentDidMount() {
-    // new Notification(item.score + ' 💥 VOTES 💥', {
-    //   body: item.title,
-    //   silent: true
-    // });
+    const rootEl = document.getElementById('root');
+    rootEl.onscroll = () => {
+      if (rootEl.scrollTop + rootEl.offsetHeight >= rootEl.scrollHeight) {
+        this.props.dispatch(actions.requestStories(50));
+      }
+    };
   }
 
   handleClick(story) {
@@ -19,6 +21,7 @@ export default class App extends Component {
       e.preventDefault();
       //electron.shell.openExternal(story.url);
       this.props.dispatch({type: 'DELETE', story});
+      //this.props.dispatch(actions.requestUpdateStory(story));
     };
   }
 
@@ -41,7 +44,7 @@ export default class App extends Component {
     return (
       <div>
         <div className={styles.header}>
-          <h1 onClick={() => this.props.dispatch(actions.requestStories())}>
+          <h1>
             Hacker News
           </h1>
           {storiesBeingLoaded > 0 && <small>updating {storiesBeingLoaded} more stories</small>}

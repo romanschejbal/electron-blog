@@ -29,8 +29,7 @@ const storiesReducer = (state = storiesInitialState, action) => {
     case actions.FETCHING_STORY:
       action.story = {
         ...action.story,
-        loading: true,
-        loaded: false
+        loading: true
       };
       return state.map(story => {
         if (story.id === action.story.id) {
@@ -41,6 +40,7 @@ const storiesReducer = (state = storiesInitialState, action) => {
     case actions.FETCHED_STORY:
       action.story = {
         ...action.story,
+        updated: new Date(),
         loading: false,
         loaded: true
       };
