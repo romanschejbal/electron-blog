@@ -10,7 +10,7 @@ export const CLICKED_STORY = 'CLICKED_STORY';
 
 export const UPDATE_SCORE_LIMIT = 'UPDATE_SCORE_LIMIT';
 
-export function requestStories(limit = 10) {
+export function requestStories(limit = 50) {
   return {
     type: REQUEST_STORIES,
     limit

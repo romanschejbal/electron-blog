@@ -44,6 +44,9 @@ const storiesReducer = (state = storiesInitialState, action) => {
         loading: false,
         loaded: true
       };
+      if (!action.story.url) {
+        action.story.url = `https://news.ycombinator.com/item?id=${action.story.id}`;
+      }
       return state.map(story => {
         if (story.id === action.story.id) {
           return action.story;

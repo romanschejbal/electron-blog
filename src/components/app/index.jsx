@@ -11,13 +11,14 @@ export default class App extends Component {
     const rootEl = document.getElementById('root');
     rootEl.onscroll = () => {
       if (rootEl.scrollTop + rootEl.offsetHeight >= rootEl.scrollHeight) {
-        this.props.dispatch(actions.requestStories(50));
+        this.props.dispatch(actions.requestStories());
       }
     };
   }
 
   handleClick(story) {
     return (e) => {
+      console.log(story);
       e.preventDefault();
       electron.shell.openExternal(story.url);
       this.props.dispatch(actions.clickedStory(story));
