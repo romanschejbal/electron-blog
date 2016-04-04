@@ -23,7 +23,7 @@ const saveState = debounce(() => {
   localStorage.setItem('state', JSON.stringify(store.getState()));
 }, 1000);
 store.subscribe(() => {
-  saveState();
+  // saveState();
   render(App);
 });
 store.dispatch({ type: 'APP_INIT', store });

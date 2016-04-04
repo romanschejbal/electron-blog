@@ -1,5 +1,6 @@
 import { take, put, call, fork } from 'redux-saga/effects';
 import moment from 'moment';
+import electron from 'electron';
 import * as actions from '../actions'
 
 function fetchStory(storyId) {
@@ -13,7 +14,7 @@ function fetchTopStoriesApi() {
           .then(stories => stories.map(storyId => ({ id: storyId, loaded: false, loading: false })));
 }
 
-function* fetchTopStories(getState) {
+function* watchRequestTopStories(getState) {
   while (true) {
     const { limit } = yield take(actions.REQUEST_STORIES);
     const allStories = yield call(fetchTopStoriesApi);
@@ -42,7 +43,7 @@ function* updateStory(story) {
   yield put(actions.fetchedStory(data));
 }
 
-function* requestUpdateStory() {
+function* watchRequestUpdateStory() {
   while (true) {
     const { story } = yield take(actions.REQUEST_UPDATE_STORY);
     yield fork(updateStory, story);
@@ -51,14 +52,14 @@ function* requestUpdateStory() {
 
 const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
 
-function* autoRequestStories() {
+function* startAutoRequestStories() {
   while (true) {
     yield call(delay, 3600 * 1000); // fetch new stories every hour
     yield put(actions.requestStories());
   }
 }
 
-function* autoUpdateStories(getState) {
+function* startAutoUpdateStories(getState) {
   while (true) {
     yield getState().stories
       .filter(story => // update stories that haven't been updated within the past hour and are not older than 1 day
@@ -69,22 +70,30 @@ function* autoUpdateStories(getState) {
   }
 }
 
-function* notificationAboutStory(getState) {
+function* notifyAboutStory(story, dispatch) {
+  yield put(actions.notifyAboutStory(story, () => {
+    console.log(story)
+    electron.shell.openExternal(story.url);
+    dispatch(actions.clickedStory(story));
+  }));
+}
+
+function* watchFetchedStory(getState, dispatch) {
   while (true) {
     const { story } = yield take(actions.FETCHED_STORY);
     const { scoreLimit } = getState().filter;
     if (story.score >= scoreLimit && getState().seenStories.indexOf(story.id) === -1) {
-      yield put(actions.notifyAboutStory(story));
+      yield fork(notifyAboutStory, story, dispatch);
     }
   }
 }
 
 export default function* root() {
   const { store } = yield take('APP_INIT');
-  yield fork(fetchTopStories, store.getState);
-  yield fork(autoRequestStories);
-  yield fork(requestUpdateStory);
-  yield fork(autoUpdateStories, store.getState);
-  yield fork(notificationAboutStory, store.getState);
+  yield fork(watchRequestTopStories, store.getState);
+  yield fork(watchRequestUpdateStory);
+  yield fork(startAutoUpdateStories, store.getState);
+  yield fork(watchFetchedStory, store.getState, store.dispatch);
+  yield fork(startAutoRequestStories);
   yield put(actions.requestStories());
 }

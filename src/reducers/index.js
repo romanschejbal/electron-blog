@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import * as actions from '../actions';
 
 const filterInitialState = {
-  scoreLimit: 0
+  scoreLimit: 200
 };
 const filterReducer = (state = filterInitialState, action) => {
   switch (action.type) {
@@ -47,6 +47,16 @@ const storiesReducer = (state = storiesInitialState, action) => {
       return state.map(story => {
         if (story.id === action.story.id) {
           return action.story;
+        }
+        return story;
+      });
+    case actions.CLICKED_STORY:
+      return state.map(story => {
+        if (story.id === action.story.id) {
+          return {
+            ...story,
+            seen: true
+          };
         }
         return story;
       });

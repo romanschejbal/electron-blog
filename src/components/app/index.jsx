@@ -20,6 +20,7 @@ export default class App extends Component {
     return (e) => {
       e.preventDefault();
       electron.shell.openExternal(story.url);
+      this.props.dispatch(actions.clickedStory(story));
     };
   }
 
@@ -35,7 +36,7 @@ export default class App extends Component {
     }
 
     return (
-      <li className={styles.story} onClick={this.handleClick(story)} key={story.id}>
+      <li className={story.seen ? styles.story + ' ' + styles.seenStory : styles.story} onClick={this.handleClick(story)} key={story.id}>
         <span className={styles.storyTitle}>{story.title}</span>
         <span className={styles.storyScore}>{story.score} points by {story.by}</span>
         <span className={styles.storyTime}>{time}</span>
