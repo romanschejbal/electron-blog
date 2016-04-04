@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "dev": "concurrently -k 'babel-node server.js' 'npm start'",
-    "build": "webpack --config webpack.config.development.js"
+    "build": "webpack --config webpack.config.production.js && electron-packager . --platform=darwin --arch=all --overwrite"
   },
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
     "concurrently": "^2.0.0",
     "css-loader": "^0.23.1",
     "debounce": "^1.0.0",
+    "electron-packager": "^6.0.0",
     "electron-prebuilt": "^0.36.0",
     "express": "^4.13.4",
     "menubar": "^4.1.0",
