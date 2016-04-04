@@ -19,9 +19,9 @@ export default class App extends Component {
   handleClick(story) {
     return (e) => {
       e.preventDefault();
-      //electron.shell.openExternal(story.url);
-      this.props.dispatch({type: 'DELETE', story});
-      //this.props.dispatch(actions.requestUpdateStory(story));
+      // electron.shell.openExternal(story.url);
+      // this.props.dispatch({type: 'DELETE', story});
+      this.props.dispatch(actions.requestUpdateStory(story));
     };
   }
 
@@ -48,6 +48,7 @@ export default class App extends Component {
             Hacker News
           </h1>
           {storiesBeingLoaded > 0 && <small>updating {storiesBeingLoaded} more stories</small>}
+          <span className={styles.scoreLimit}>{filter.scoreLimit}</span>
           <input type="range" min="0" max="1000" value={filter.scoreLimit} onChange={(e) => this.props.dispatch(actions.updateScoreLimit(e.target.value))} />
         </div>
         <ol className={styles.storyList}>

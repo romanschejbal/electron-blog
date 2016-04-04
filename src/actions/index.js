@@ -8,7 +8,7 @@ export const REQUEST_UPDATE_STORY = 'REQUEST_UPDATE_STORY';
 
 export const UPDATE_SCORE_LIMIT = 'UPDATE_SCORE_LIMIT';
 
-export function requestStories(limit = 20) {
+export function requestStories(limit = 10) {
   return {
     type: REQUEST_STORIES,
     limit

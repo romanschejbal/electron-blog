@@ -10,6 +10,12 @@
       Chromium <script>document.write(process.versions.chrome)</script>,
       and Electron <script>document.write(process.versions.electron)</script>.
     </div>
-    <script src="./dist/bundle.js"></script>
+    <script>
+      (function() {
+        const script = document.createElement('script');
+        script.src = process.env === 'development' ? 'http://localhost:9000/dist/bundle.js' : './dist/bundle.js';
+        document.write(script.outerHTML);
+      }());
+    </script>
   </body>
 </html>
