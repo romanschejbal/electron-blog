@@ -1,6 +1,5 @@
 import { take, put, call, fork } from 'redux-saga/effects';
 import moment from 'moment';
-import electron from 'electron';
 import * as actions from '../actions'
 
 function fetchStory(storyId) {
@@ -74,13 +73,8 @@ function* notificationAboutStory(getState) {
   while (true) {
     const { story } = yield take(actions.FETCHED_STORY);
     const { scoreLimit } = getState().filter;
-    if (story.score >= scoreLimit) {
-      const notification = new Notification(`Hacker News ${story.score} 👍💥 votes`, {
-        body: story.title
-      });
-      notification.onclick = () => {
-        electron.shell.openExternal(story.url);
-      };
+    if (story.score >= scoreLimit && getState().seenStories.indexOf(story.id) === -1) {
+      yield put(actions.notifyAboutStory(story));
     }
   }
 }

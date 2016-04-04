@@ -1,3 +1,5 @@
+import electron from 'electron';
+
 export const REQUEST_STORIES = 'REQUEST_STORIES';
 export const FETCHED_STORIES = 'FETCHED_STORIES';
 
@@ -5,6 +7,7 @@ export const FETCHING_STORY = 'FETCHING_STORY';
 export const FETCHED_STORY = 'FETCHED_STORY';
 
 export const REQUEST_UPDATE_STORY = 'REQUEST_UPDATE_STORY';
+export const NOTIFY_ABOUT_STORY = 'NOTIFY_ABOUT_STORY';
 
 export const UPDATE_SCORE_LIMIT = 'UPDATE_SCORE_LIMIT';
 
@@ -48,4 +51,18 @@ export function requestUpdateStory(story) {
     type: REQUEST_UPDATE_STORY,
     story
   }
+}
+
+export function notifyAboutStory(story) {
+  const notification = new Notification(`Hacker News ${story.score} 👍💥 votes`, {
+    body: story.title
+  });
+  notification.onclick = () => {
+    electron.shell.openExternal(story.url);
+  };
+
+  return {
+    type: NOTIFY_ABOUT_STORY,
+    story
+  };
 }

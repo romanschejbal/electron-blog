@@ -57,7 +57,19 @@ const storiesReducer = (state = storiesInitialState, action) => {
   }
 };
 
+
+const seenStoriesInitialState = [];
+const seenStoriesReducer = (state = seenStoriesInitialState, action) => {
+  switch (action.type) {
+    case actions.NOTIFY_ABOUT_STORY:
+      return state.concat([action.story.id]);
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   filter: filterReducer,
-  stories: storiesReducer
+  stories: storiesReducer,
+  seenStories: seenStoriesReducer
 });

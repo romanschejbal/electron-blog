@@ -19,14 +19,20 @@ export default class App extends Component {
   handleClick(story) {
     return (e) => {
       e.preventDefault();
-      // electron.shell.openExternal(story.url);
-      // this.props.dispatch({type: 'DELETE', story});
-      this.props.dispatch(actions.requestUpdateStory(story));
+      electron.shell.openExternal(story.url);
     };
   }
 
   renderStory(story) {
     const time = moment.unix(story.time).fromNow();
+
+    if (story.dead) {
+      return (
+        <li className={styles.story} onClick={this.handleClick(story)} key={story.id}>
+          <del className={styles.storyTitle}>{story.title}</del>
+        </li>
+      )
+    }
 
     return (
       <li className={styles.story} onClick={this.handleClick(story)} key={story.id}>
@@ -44,7 +50,7 @@ export default class App extends Component {
     return (
       <div>
         <div className={styles.header}>
-          <h1>
+          <h1 onClick={() => electron.shell.openExternal(`https://news.ycombinator.com/`)}>
             Hacker News
           </h1>
           {storiesBeingLoaded > 0 && <small>updating {storiesBeingLoaded} more stories</small>}
@@ -54,7 +60,6 @@ export default class App extends Component {
         <ol className={styles.storyList}>
           {stories
             .filter(s => s.loaded && s.score >= filter.scoreLimit)
-            //.sort((a, b) => b.score - a.score)
             .map(::this.renderStory)}
         </ol>
       </div>
