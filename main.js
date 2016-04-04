@@ -31,7 +31,7 @@ function createWindow () {
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-app.on('ready', createWindow);
+// app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -52,7 +52,7 @@ app.on('activate', function () {
 
 // menubar
 const mb = menubar({
-  'show-dock-icon': true
+  'preload-window': true
 });
 mb.on('ready', function ready () {
   console.log('app is ready')
