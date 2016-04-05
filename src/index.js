@@ -10,7 +10,7 @@ const store = configureStore(state || {});
 let App = require('./components/app').default;
 const render = (Component) => {
   renderReact(<Component {...store} />, document.getElementById('root'));
-}
+};
 
 if (module.hot) {
   module.hot.accept('./components/app', function() {

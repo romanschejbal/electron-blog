@@ -63,6 +63,16 @@ const storiesReducer = (state = storiesInitialState, action) => {
         }
         return story;
       });
+    case actions.MARK_ALL_AS_READ:
+      return state.map(story => {
+        if (action.stories.find(s => s.id === story.id)) {
+          return {
+            ...story,
+            seen: true
+          };
+        }
+        return story;
+      });
     case 'DELETE':
       return state.filter(s => s.id !== action.story.id);
     default:

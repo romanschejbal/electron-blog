@@ -7,6 +7,7 @@ export const FETCHED_STORY = 'FETCHED_STORY';
 export const REQUEST_UPDATE_STORY = 'REQUEST_UPDATE_STORY';
 export const NOTIFY_ABOUT_STORY = 'NOTIFY_ABOUT_STORY';
 export const CLICKED_STORY = 'CLICKED_STORY';
+export const MARK_ALL_AS_READ = 'MARK_ALL_AS_READ';
 
 export const UPDATE_SCORE_LIMIT = 'UPDATE_SCORE_LIMIT';
 
@@ -68,5 +69,12 @@ export function clickedStory(story) {
   return {
     type: CLICKED_STORY,
     story
+  };
+}
+
+export function markAllAsRead(stories) {
+  return {
+    type: MARK_ALL_AS_READ,
+    stories
   };
 }

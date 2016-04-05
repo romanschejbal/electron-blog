@@ -1,5 +1,5 @@
 import menubar from 'menubar';
-import electron from 'electron';
+import electron, { ipcMain } from 'electron';
 
 // Module to control application life.
 const app = electron.app;
@@ -31,7 +31,7 @@ function createWindow () {
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-// app.on('ready', createWindow);
+app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -52,9 +52,15 @@ app.on('activate', function () {
 
 // menubar
 const mb = menubar({
-  'preload-window': true
+  'preload-window': true,
+  'resizable': false
 });
 mb.on('ready', function ready () {
   console.log('app is ready')
   // your app code here
+});
+
+// ipc communication
+ipcMain.on('quit', () => {
+  app.quit();
 });

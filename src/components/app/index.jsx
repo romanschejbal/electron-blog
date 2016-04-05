@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import electron from 'electron';
+import electron, { ipcRenderer } from 'electron';
 import moment from 'moment';
 
 import * as actions from '../../actions';
@@ -18,7 +18,6 @@ export default class App extends Component {
 
   handleClick(story) {
     return (e) => {
-      console.log(story);
       e.preventDefault();
       electron.shell.openExternal(story.url);
       this.props.dispatch(actions.clickedStory(story));
@@ -49,6 +48,8 @@ export default class App extends Component {
     const { stories, filter } = this.props.getState();
     const storiesBeingLoaded = stories.filter(s => s.loading).length;
 
+    const filteredStories = stories.filter(s => s.loaded && s.score >= filter.scoreLimit);
+
     return (
       <div>
         <div className={styles.header}>
@@ -58,11 +59,11 @@ export default class App extends Component {
           {storiesBeingLoaded > 0 && <small>updating {storiesBeingLoaded} more stories</small>}
           <span className={styles.scoreLimit}>{filter.scoreLimit}</span>
           <input type="range" min="0" max="1000" value={filter.scoreLimit} onChange={(e) => this.props.dispatch(actions.updateScoreLimit(e.target.value))} />
+          <span className={styles.closeBtn} onClick={() => ipcRenderer.send('quit')}>x</span>
+          <span className={styles.markAllBtn} onClick={() => this.props.dispatch(actions.markAllAsRead(filteredStories))}>r</span>
         </div>
         <ol className={styles.storyList}>
-          {stories
-            .filter(s => s.loaded && s.score >= filter.scoreLimit)
-            .map(::this.renderStory)}
+          {filteredStories.map(::this.renderStory)}
         </ol>
       </div>
     );

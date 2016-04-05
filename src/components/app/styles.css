@@ -39,15 +39,38 @@ h4 {
 }
 .header h1 {
   flex: 1;
+  cursor: pointer;
 }
 .header small {
   flex: 1;
 }
 .header .scoreLimit {
   font-size: 11px;
-  margin-right: 5px;
+}
+.header .closeBtn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-family: sans-serif;
+  font-size: 8px;
+  line-height: 8px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, .3);
+  cursor: pointer;
+}
+.header .markAllBtn {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-family: sans-serif;
+  font-size: 8px;
+  line-height: 8px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, .3);
+  cursor: pointer;
 }
 .header input[type=range] {
+  margin: 0 5px;
   -webkit-appearance: none;
   background: transparent;
   outline: 0;
