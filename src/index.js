@@ -25,5 +25,8 @@ const saveState = debounce(() => {
 store.subscribe(() => {
   saveState();
   render(App);
+  if (process.env.ENV === 'development') {
+    console.log('state', store.getState());
+  }
 });
 store.dispatch({ type: 'APP_INIT', store });

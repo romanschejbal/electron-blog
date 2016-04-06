@@ -86,6 +86,12 @@ const seenStoriesReducer = (state = seenStoriesInitialState, action) => {
   switch (action.type) {
     case actions.NOTIFY_ABOUT_STORY:
       return state.concat([action.story.id]);
+    case actions.MARK_ALL_AS_READ:
+      return state
+        .concat(action.stories.map(story => story.id))
+        .filter(id => action.stories.some(s => s.id === id)) // remove old stories
+        .sort()
+        .reduce((arr, id) => (arr.length > 0 && arr[arr.length - 1] === id) ? arr : [...arr, id], []);
     default:
       return state;
   }
