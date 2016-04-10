@@ -30,11 +30,12 @@ export default class App extends Component {
     const { stories, filter, favoriteStories } = this.props.getState();
     const storiesBeingLoaded = stories.filter(s => s.loading).length;
 
-    let content;
+    let content, filteredStories;
     switch (filter.activeTab) {
       case 'topStories':
+        filteredStories = stories.filter(s => s.loaded && s.score >= filter.scoreLimit);
         content = <StoryList
-          stories={stories.filter(s => s.loaded && s.score >= filter.scoreLimit)}
+          stories={filteredStories}
           favoriteStories={favoriteStories}
           handleClick={::this.handleClick}
           handleFavoriteClick={::this.handleFavoriteClick}
@@ -89,7 +90,7 @@ export default class App extends Component {
         {content}
 
         <div className={styles.footer}>
-          <button className={styles.markAllAsReadBtn} onClick={() => this.props.dispatch(actions.markAllAsRead(filteredStories))}>Mark all as read</button>
+          <button hidden={filter.activeTab !== 'topStories'} className={styles.markAllAsReadBtn} onClick={() => this.props.dispatch(actions.markAllAsRead(filteredStories))}>Mark all as read</button>
           <div className={styles.filter}>
             <div className={styles.scoreLimit}>{filter.scoreLimit}</div>
             <input type="range" min="0" max="1000" value={filter.scoreLimit} onChange={(e) => this.props.dispatch(actions.updateScoreLimit(e.target.value))} />
