@@ -63,7 +63,7 @@ function* startAutoUpdateStories(getState) {
   while (true) {
     yield getState().stories
       .filter(story => // update stories that haven't been updated within the past hour and are not older than 1 day
-        story.loaded && moment().diff(moment(story.updated)) > 3600 * 1000 && moment().diff(moment.unix(story.time)) < 3600 * 1000 * 24)
+        story.loaded && moment().diff(moment(story.updated)) > 3600 * 1000)// && moment().diff(moment.unix(story.time)) < 3600 * 1000 * 24)
       .map(story => call(updateStory, story));
     yield call(delay, 60 * 10 * 1000); // update loaded stories every 10 minutes
   }

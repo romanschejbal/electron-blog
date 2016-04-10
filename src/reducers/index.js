@@ -49,7 +49,10 @@ const storiesReducer = (state = storiesInitialState, action) => {
       }
       return state.map(story => {
         if (story.id === action.story.id) {
-          return action.story;
+          return {
+            ...story,
+            ...action.story,
+          };
         }
         return story;
       });

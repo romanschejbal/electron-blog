@@ -1,11 +1,14 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,500,700,300);
+
 html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: monospace;
+  font-family: Raleway, 'Helvetica Neue';
   padding: 0px;
   margin: 0;
-  background: #eee;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
 }
 body > div {
   height: 100%;
@@ -26,119 +29,149 @@ h4 {
   top: 0;
   left: 0;
   right: 0;
-  background: rgb(255, 102, 0);
+  background: #FC4F08;
   margin: 0;
-  padding: 0 10px;
-  text-transform: uppercase;
-  display: flex;
-  height: 50px;
-  line-height: 50px;
+  height: 80px;
   z-index: 10;
   overflow: hidden;
-  box-shadow: 0px 0px 10px 10px #eee;
+  color: #fff;
 }
 .header h1 {
-  flex: 1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 198px;
+  height: 51px;
+  transform: translateX(-50%) translateY(-35%);
+  background: url(./logo.png);
+  font-size: 0;
   cursor: pointer;
+  transition: all .3s;
 }
-.header small {
-  flex: 1;
+.header h1:hover {
+  transform: translateX(-50%) translateY(-40%);
 }
-.header .scoreLimit {
+
+.infoBtn {
+  background: url(./info.png);
+  width: 30px;
+  height: 30px;
+  border: 0;
+  position: absolute;
+  left: 30px;
+  top: 25px;
+  outline: 0;
+  cursor: pointer;
+  transition: all .3s;
+}
+.infoBtn:hover {
+  transform: rotateZ(360deg);
+}
+
+.settingsBtn {
+  display: none;
+}
+
+.subHeader {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 80px;
+  height: 40px;
+  background: #f6f6f6;
+  z-index: 10;
+  box-shadow: 0px 1px 0px 0px rgba(0,0,0,.1);
+  display: flex;
+}
+.topStoriesBtn, .favoriteStoriesBtn {
+  flex: 1 1;
+  height: 40px;
+  border: 0px;
+  cursor: pointer;
+  outline: 0;
+}
+.topStoriesBtn {
+  background: transparent url(./topStories.svg) no-repeat center center;
+}
+.topStoriesBtn:hover {
+  background: transparent url(./topStoriesHover.svg) no-repeat center center;
+}
+.favoriteStoriesBtn {
+  border-left: 1px solid #e2e2e2;
+  background: transparent url(./favoriteStories.svg) no-repeat center center;
+}
+.favoriteStoriesBtn:hover {
+  background: transparent url(./favoriteStoriesHover.svg) no-repeat center center;
+}
+
+.scoreLimit {
+  display: none;
   font-size: 11px;
+  color: #fff;
 }
-.header .closeBtn {
+.filter {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  font-family: sans-serif;
-  font-size: 8px;
-  line-height: 8px;
-  font-weight: bold;
-  color: rgba(0, 0, 0, .3);
-  cursor: pointer;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
 }
-.header .markAllBtn {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  font-family: sans-serif;
-  font-size: 8px;
-  line-height: 8px;
-  font-weight: bold;
-  color: rgba(0, 0, 0, .3);
-  cursor: pointer;
-}
-.header input[type=range] {
+.filter input[type=range] {
+  display: none;
   margin: 0 5px;
   -webkit-appearance: none;
   background: transparent;
   outline: 0;
 }
-.header input[type=range]::-webkit-slider-runnable-track {
+.filter input[type=range]::-webkit-slider-runnable-track {
   -webkit-appearance: none;
   width: 300px;
   height: 3px;
-  background: rgba(0, 0, 0, .2);
+  background: rgba(255, 255, 255, .4);
   border: none;
 }
-.header input[type=range]::-webkit-slider-thumb {
+.filter input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   height: 15px;
   width: 15px;
   border-radius: 50%;
-  background: rgb(255, 102, 0);
-  border: 3px solid rgba(0, 0, 0, .5);;
+  background: #FC4F08;
+  border: 3px solid #fff;
   margin-top: -6px;
 }
 
-.storyList {
-  padding: 0;
-  margin: 50px 0 0;
-  list-style-position: inside;
+.footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 40px;
+  background: #f6f6f6;
+  padding: 0 15px;
+  border-top: 1px solid #ddd;
 }
 
-.story {
-  margin: 0px;
-  padding: 10px;
-  position: relative;
-  height: 30px;
-  cursor: pointer;
-  overflow: hidden;
-}
-
-.seenStory {
-  color: #888;
-}
-
-.story:hover {
+.markAllAsReadBtn, .quitBtn {
+  padding: 3px 6px;
+  outline: 0;
+  border: 1px solid #ccc;
   background: #fff;
+  border-radius: 3px;
+  transform: translateY(-48%);
+  position: absolute;
+  top: 50%;
+  cursor: pointer;
+  transition: all .3s;
+  color: #aaa;
 }
 
-.storyTitle {
-  font-size: 14px;
-  display: block;
-  font-weight: bold;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  position: absolute;
-  top: 9px;
-  left: 40px;
-  right: 10px;
+.markAllAsReadBtn:hover, .quitBtn:hover {
+
 }
 
-.storyScore {
-  font-size: 12px;
-  margin-right: 10px;
-  position: absolute;
-  bottom: 6px;
-  left: 40px;
+.markAllAsReadBtn {
+  left: 15px;
 }
 
-.storyTime {
-  font-size: 12px;
-  position: absolute;
-  bottom: 6px;
-  right: 10px;
+.quitBtn {
+  right: 15px;
 }
