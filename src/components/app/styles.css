@@ -200,3 +200,7 @@ h4 {
 .page p {
   margin-bottom: 15px;
 }
+
+.textRight {
+  text-align: right;
+}

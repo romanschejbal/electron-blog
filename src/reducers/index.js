@@ -111,7 +111,10 @@ const favoriteStoriesInitialState = {};
 const favoriteStoriesReducer = (state = favoriteStoriesInitialState, action) => {
   switch (action.type) {
     case actions.ADD_TO_FAVORITES:
-      state[action.story.id] = action.story;
+      state[action.story.id] = {
+        ...action.story,
+        seen: false
+      };
       return state;
     case actions.REMOVE_FROM_FAVORITES:
       delete state[action.story.id];

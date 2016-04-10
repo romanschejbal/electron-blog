@@ -64,7 +64,16 @@ export default class App extends Component {
               It also gives you the option to mark story as a favorite or save it for later this way.
             </p>
             <p>
-              Please report any bugs and issues to <a href="http://github.com/romanschejbal/electron-blog">Github</a>
+              Please report any bugs and issues on <a href="#" onClick={() => electron.shell.openExternal('http://github.com/romanschejbal/electron-blog')}>Github</a>
+            </p>
+            <p>
+              &nbsp;
+            </p>
+            <p className={styles.textRight}>
+              <strong>Developed &amp; Designed by</strong><br />
+              <a href="#" onClick={() => electron.shell.openExternal('http://twitter.com/romanschejbal')}>@romanschejbal</a>
+              &nbsp;&amp;&nbsp;
+              <a href="#" onClick={() => electron.shell.openExternal('http://twitter.com/maldonaut')}>@maldonaut</a>
             </p>
           </div>
         );
@@ -91,7 +100,7 @@ export default class App extends Component {
 
         <div className={styles.footer}>
           <button hidden={filter.activeTab !== 'topStories'} className={styles.markAllAsReadBtn} onClick={() => this.props.dispatch(actions.markAllAsRead(filteredStories))}>Mark all as read</button>
-          <div className={styles.filter}>
+          <div hidden={filter.activeTab !== 'topStories'} className={styles.filter}>
             <div className={styles.scoreLimit}>{filter.scoreLimit}</div>
             <input type="range" min="0" max="1000" value={filter.scoreLimit} onChange={(e) => this.props.dispatch(actions.updateScoreLimit(e.target.value))} />
           </div>
