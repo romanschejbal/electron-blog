@@ -62,11 +62,14 @@ a {
   opacity: 0;
   transition: all .5s;
 }
-.scoreWrapper:hover .favoriteBtn {
+.favoriteStory .favoriteBtn {
+  background: url(./favoriteOn.svg) no-repeat center center;
+}
+.scoreWrapper:hover .favoriteBtn, .favoriteStory .favoriteBtn {
   top: 50%;
   opacity: 1;
 }
-.scoreWrapper:hover .score {
+.scoreWrapper:hover .score, .favoriteStory .score {
   top: 80%;
   opacity: 0;
 }

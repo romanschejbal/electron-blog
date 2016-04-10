@@ -8,8 +8,10 @@ export const REQUEST_UPDATE_STORY = 'REQUEST_UPDATE_STORY';
 export const NOTIFY_ABOUT_STORY = 'NOTIFY_ABOUT_STORY';
 export const CLICKED_STORY = 'CLICKED_STORY';
 export const MARK_ALL_AS_READ = 'MARK_ALL_AS_READ';
-
 export const UPDATE_SCORE_LIMIT = 'UPDATE_SCORE_LIMIT';
+export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
+export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES';
+export const SWITCH_TAB = 'SWITCH_TAB';
 
 export function requestStories(limit = 50) {
   return {
@@ -76,5 +78,26 @@ export function markAllAsRead(stories) {
   return {
     type: MARK_ALL_AS_READ,
     stories
+  };
+}
+
+export function addToFavorites(story) {
+  return {
+    type: ADD_TO_FAVORITES,
+    story
+  };
+}
+
+export function removeFromFavorites(story) {
+  return {
+    type: REMOVE_FROM_FAVORITES,
+    story
+  };
+}
+
+export function switchTab(newTab) {
+  return {
+    type: SWITCH_TAB,
+    newTab
   };
 }

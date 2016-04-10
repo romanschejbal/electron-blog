@@ -8,13 +8,20 @@ export default function (props) {
   const time = moment.unix(props.story.time).fromNow();
   const site = props.story.url.replace(/(https?:\/\/)(www\.)?([^\/]+)(.+)/, '$3');
   const userUrl = props.story.url;
+  let style = [styles.story];
+  if (props.story.seen) {
+    style.push(styles.seenStory);
+  }
+  if (props.isFavorite) {
+    style.push(styles.favoriteStory);
+  }
   return (
-    <li className={props.story.seen ? styles.story + ' ' + styles.seenStory : styles.story} onClick={props.onClick} key={props.story.id}>
-      <div className={styles.scoreWrapper}>
+    <li className={style.join(' ')} key={props.story.id}>
+      <div className={styles.scoreWrapper} onClick={props.onFavoriteClick}>
         <button className={styles.favoriteBtn} />
         <span className={styles.score}>{props.story.score}</span>
       </div>
-      <div className={styles.body}>
+      <div className={styles.body} onClick={props.onClick}>
         <div className={styles.title}>{props.story.title}</div>
         <div className={styles.subtitle}>
           {site}

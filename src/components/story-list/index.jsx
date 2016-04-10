@@ -15,10 +15,23 @@ export default class StoryList extends Component {
   }
 
   render() {
-    const { stories, handleClick } = this.props;
+    const {
+      stories,
+      favoriteStories,
+      handleClick,
+      handleFavoriteClick
+    } = this.props;
     return (
       <ol className={styles.storyList}>
-        {stories.map(story => <Story story={story} onClick={handleClick(story)} key={story.id} />)}
+        {stories.map(story => (
+          <Story
+            story={story}
+            onClick={handleClick(story)}
+            onFavoriteClick={handleFavoriteClick(story)}
+            isFavorite={favoriteStories[story.id]}
+            key={story.id}
+          />
+        ))}
       </ol>
     );
   }
