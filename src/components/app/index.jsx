@@ -10,7 +10,6 @@ export default class App extends Component {
 
   handleClick(story) {
     return (e) => {
-      e.preventDefault();
       electron.shell.openExternal(story.url);
       this.props.dispatch(actions.clickedStory(story));
     };
@@ -23,6 +22,12 @@ export default class App extends Component {
       } else {
         this.props.dispatch(actions.addToFavorites(story));
       }
+    };
+  }
+
+  handleCommentsClick(story) {
+    return (e) => {
+      electron.shell.openExternal(`https://news.ycombinator.com/item?id=${story.id}`);
     };
   }
 
@@ -39,6 +44,7 @@ export default class App extends Component {
           favoriteStories={favoriteStories}
           handleClick={::this.handleClick}
           handleFavoriteClick={::this.handleFavoriteClick}
+          handleCommentsClick={::this.handleCommentsClick}
           onScrollToEnd={() => this.props.dispatch(actions.requestStories())} />
         break;
       case 'favoriteStories':
@@ -47,6 +53,7 @@ export default class App extends Component {
           favoriteStories={favoriteStories}
           handleClick={::this.handleClick}
           handleFavoriteClick={::this.handleFavoriteClick}
+          handleCommentsClick={::this.handleCommentsClick}
           onScrollToEnd={() => this.props.dispatch(actions.requestStories())} />
         break;
       case 'info':

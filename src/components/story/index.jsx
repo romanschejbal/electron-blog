@@ -31,7 +31,7 @@ export default function (props) {
           {time}
         </div>
       </div>
-      <div className={styles.commentsWrapper}>
+      <div className={styles.commentsWrapper} onClick={props.onCommentsClick}>
         <span>{props.story.kids && props.story.kids.length}</span>
       </div>
     </li>

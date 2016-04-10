@@ -19,7 +19,8 @@ export default class StoryList extends Component {
       stories,
       favoriteStories,
       handleClick,
-      handleFavoriteClick
+      handleFavoriteClick,
+      handleCommentsClick
     } = this.props;
     return (
       <ol className={styles.storyList}>
@@ -28,6 +29,7 @@ export default class StoryList extends Component {
             story={story}
             onClick={handleClick(story)}
             onFavoriteClick={handleFavoriteClick(story)}
+            onCommentsClick={handleCommentsClick(story)}
             isFavorite={favoriteStories[story.id]}
             key={story.id}
           />
