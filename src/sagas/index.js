@@ -17,30 +17,38 @@ function fetchTopStoriesApi() {
 function* watchRequestTopStories(getState) {
   while (true) {
     const { limit } = yield take(actions.REQUEST_STORIES);
-    const allStories = yield call(fetchTopStoriesApi);
-    yield put(actions.fetchedStories(allStories));
+    try {
+      const allStories = yield call(fetchTopStoriesApi);
+      yield put(actions.fetchedStories(allStories));
 
-    const stories = allStories.filter(story => {
-      const storyFromState = getState().stories.find(s => s.id === story.id);
-      if (!storyFromState) {
-        return true;
-      }
-      if (!storyFromState.loaded) {
-        return true;
-      }
-      return false;
-    }).slice(0, limit);
+      const stories = allStories.filter(story => {
+        const storyFromState = getState().stories.find(s => s.id === story.id);
+        if (!storyFromState) {
+          return true;
+        }
+        if (!storyFromState.loaded) {
+          return true;
+        }
+        return false;
+      }).slice(0, limit);
 
-    yield stories.map(function* (story) {
-      yield call(updateStory, story);
-    });
+      yield stories.map(function* (story) {
+        yield call(updateStory, story);
+      });
+    } catch (ex) {
+      console.log('error while fetching stories', ex);
+    }
   }
 }
 
 function* updateStory(story) {
   yield put(actions.fetchingStory(story));
-  const data = yield call(fetchStory, story.id);
-  yield put(actions.fetchedStory(data));
+  try {
+    const data = yield call(fetchStory, story.id);
+    yield put(actions.fetchedStory(data));
+  } catch (e) {
+
+  }
 }
 
 function* watchRequestUpdateStory() {
