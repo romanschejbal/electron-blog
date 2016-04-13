@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ENV=development electron .",
     "dev": "concurrently -k 'babel-node server.js' 'npm start'",
-    "build": "webpack --config webpack.config.production.js && electron-packager . HackerNews --platform=darwin --arch=all --overwrite"
+    "build": "webpack --config webpack.config.production.js && electron-packager . HackerNews --platform=darwin --arch=all --prune --overwrite --icon ./HN_icon"
   },
   "repository": {
     "type": "git",
