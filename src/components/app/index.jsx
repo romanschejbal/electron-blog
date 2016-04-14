@@ -67,11 +67,10 @@ export default class App extends Component {
               </strong>
             </p>
             <p>
-              This is an unofficial app that helps you filter the most interesting stories and has been created in educational manner.
-              It also gives you the option to mark story as a favorite or save it for later this way.
+              This is an unofficial HackerNews reader with notifications for the most popular stories. Set the minimum number of upvotes and get notified when a story passes the threshold. You can also favourite stories to read later.  For educational purposes only.
             </p>
             <p>
-              Please report any bugs and issues on <a href="#" onClick={() => electron.shell.openExternal('http://github.com/romanschejbal/electron-blog')}>Github</a>
+              Please report any bugs or request new features on <a href="#" onClick={() => electron.shell.openExternal('http://github.com/romanschejbal/electron-blog')}>Github</a>
             </p>
             <p>
               &nbsp;
