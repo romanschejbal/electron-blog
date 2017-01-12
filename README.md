@@ -17,7 +17,7 @@ We’ll take a high level look at how Electron works, but we’ll also use [ES20
 ### What we’ll be building
 To highlight some of the things that a desktop application excels in from a normal web app, we’ll need to build something using the native features. Electron provides many APIs above the native functionality and I’ve decided to build a simple HackerNews app or a watcher, that’ll let me know when there is a popular post (>= XXX votes), because I don’t want to miss those and it’s quite reasonable size of a project for this purpose. Well, at least I thought so when I started writing this blog. ¯\_(ツ)_/¯ You can download the app (for Mac) [here](https://github.com/romanschejbal/electron-blog/releases).
 
-![app](http://red-badger.com/blog/wp-content/uploads/2016/04/Screenshot-2016-04-12-15.25.26.png)
+![app](https://static1.squarespace.com/static/5783a7e19de4bb11478ae2d8/t/5821d56009e1c4674873b0ce/1478614150421/Screenshot-2016-04-12-15.25.26.png?format=750w)
 
 If we go to the Electron [homepage](http://electron.atom.io/), we’ll find quick startup instructions at the bottom of that page; so startup your terminal and let’s get on with it!
 
