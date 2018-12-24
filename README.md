@@ -130,7 +130,7 @@ We’ll use Webpack with it’s hot module replacement (HMR for short) for live 
 In order to do that, we need to install a few node modules:
 
 ```
-npm i —save-dev express webpack webpack-dev-middleware webpack-hot-middleware webpack-target-electron-renderer
+npm i -save-dev express webpack webpack-dev-middleware webpack-hot-middleware webpack-target-electron-renderer
 ```
 
 Then we create a basic webpack configuration:
@@ -181,7 +181,7 @@ Since the electron index.html page is running from the file system, we need to p
 Also, as you can see we’ll use babel and css-modules so we actually need to install a few more modules which you can do with this command:
 
 ```
-npm i —save-dev babel-cli babel-loader babel-polyfill babel-preset-es2015 babel-preset-stage-0 babel-preset-react css-loader style-loader postcss-loader
+npm i -save-dev babel-cli babel-loader babel-polyfill babel-preset-es2015 babel-preset-stage-0 babel-preset-react css-loader style-loader postcss-loader
 ```
 
 Now that we have our config, let’s write up the server and connect it to Webpack.
@@ -264,7 +264,7 @@ npm start
 npm run server
 ```
 
-Let’s get rid of that by installing the [concurrently module](https://www.npmjs.com/package/concurrently ) `npm i —save-dev concurrently`, update the package.json once more and we are back to one command:
+Let’s get rid of that by installing the [concurrently module](https://www.npmjs.com/package/concurrently ) `npm i -save-dev concurrently`, update the package.json once more and we are back to one command:
 `npm run dev`
 
 _package.json_
